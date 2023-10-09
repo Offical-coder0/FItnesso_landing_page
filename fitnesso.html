@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ 
+  <link rel="icon" type="image/x-icon" href="https://i.pinimg.com/474x/f5/91/c7/f591c7e05aee3c8f9f1f136f96e65f8c.jpg">
+ <style>
+   *,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --brand-clr: hsl(185, 85%, 40%);
+    --bg-primary: hsl(195, 20%, 86%);
+    --border-clr: hsl(195, 16%, 82%);
+    --accent-blue: hsl(205, 100%, 48%);
+    --text-primary: hsl(180, 6%, 38%);
+    --text-accent: hsl(195, 2%, 78%);
+
+    --header: 3.5rem;
+    --full-width: 100%;
+    --padding-space: calc(var(--full-width) - 2rem);
+    --max-width: 80rem;
+    --min-width: 22.5rem;
+
+    --bd-radius: 0.5em;
+    --space-025: 0.25rem;
+    --space-05: 0.5rem;
+    --space-1: 1rem;
+}
+
+a {
+    text-decoration: none;
+}
+
+body {
+    display: flex;
+    flex-flow: column;
+    min-block-size: 100vh;
+    overflow-x: hidden;
+    font-family: system-ui;
+    scroll-behavior: smooth;
+    /* background: linear-gradient(45deg, hsl(185, 26%, 72%), hsl(224, 66%, 82%)); */
+}
+
+.container {
+    flex-grow: 0;
+    display: grid;
+    position: fixed;
+    place-self: center;
+    width: 100vw;
+    z-index: 10000;
+    inline-size: clamp(
+        var(--min-width),
+        var(--padding-space),
+        var(--max-width)
+    );
+}
+
+.site-header {
+    --padding: 1rem;
+    width: 100vw;
+    /* --header-margin: 5vh; */
+    --shadow: 0 0.1875em 0.3125em #0003, 0 0.125em 0.5em #0002;
+    margin-block: auto;
+    margin-left: -3%;
+    min-block-size: var(--header);
+    background-color:#fff;
+    outline: 1px solid var(--border-clr);
+    border-radius: var(--bd-radius);
+    padding-inline: var(--padding);
+    box-shadow: var(--shadow);
+}
+
+.header__content--flow {
+    block-size: inherit;
+    display: flex;
+    flex-flow: wrap;
+
+    /* Breakpoint 1280px > 720px */
+    gap: 0 clamp(3.5rem, -24.14rem + 61.43vw, 25rem);
+}
+
+.header__content--flow > * {
+    flex-grow: 1;
+    height: var(--header);
+    width: calc((45rem - var(--full-width) - (var(--padding) * 2)) * 999);
+}
+
+.header-content--left {
+    display: grid;
+    grid-auto-flow: column;
+    inline-size: max-content;
+    place-content: center;
+}
+
+.brand-logo {
+    gap: var(--space-05);
+    padding: 0.25em 0.75em;
+    align-items: center;
+    display: inline-flex;
+}
+
+.brand-logo img{
+    height: 26px;
+}
+
+.logo-text {
+    color: var(--text-primary);
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.nav-toggle {
+    aspect-ratio: 1;
+    height: 2.25rem;
+    display: inline-grid;
+    place-content: center;
+    background: none;
+    border: none;
+    visibility: hidden;
+    cursor: pointer;
+}
+
+.nav-toggle:active {
+    scale: 0.9;
+}
+
+.toggle--icon {
+    width: 1.5rem;
+    height: 0.25rem;
+    border-radius: 10vh;
+    position: relative;
+    background-color: #666;
+}
+
+.toggle--icon::before,
+.toggle--icon::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background-color: currentColor;
+    translate: 0 var(--bar--top, 0.5rem);
+}
+
+.toggle--icon::after {
+    --bar--top: -0.5rem;
+}
+
+.header-content--right {
+    flex-grow: 999;
+}
+
+.header-nav {
+    display: grid;
+    align-items: center;
+    block-size: 100%;
+}
+
+.nav__list {
+    list-style: none;
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: space-evenly;
+    grid-auto-rows: 2.25rem;
+}
+
+.list-item {
+    block-size: 100%;
+}
+.list-item button{
+  background-color: #081158;
+  border: none;
+  color: white;
+  padding: 10px 22px;
+  font-size: 17px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.nav__link {
+    block-size: inherit;
+    display: inline-grid;
+    place-items: center;
+    min-width: 10ch;
+    color: var(--text-primary);
+    font-size: 15.3px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.nav__link:focus-within {
+    color: var(--accent-blue);
+}
+.nav__link:hover:not(:focus) {
+    border-bottom: 2px solid currentColor;
+}
+.nav__list:hover .nav__link:not(:focus, :hover) {
+    color: var(--text-accent);
+}
+
+@media (max-width: 575px) {
+    .header-content--left {
+        justify-content: space-between;
+    }
+
+    .header-content--right {
+        height: auto;
+    }
+
+    .nav-toggle {
+        visibility: visible;
+    }
+
+    .nav__list {
+        right: 0;
+        margin-inline: var(--space-1);
+        top: calc(50% + var(--space-1) * 2);
+        gap: var(--space-05) 0;
+        position: fixed;
+        width: 10em;
+        top:0;
+        background-color: #fff;
+        border-radius: var(--bd-radius);
+        border: 1px solid var(--border-clr);
+        padding-block: 0.5rem;
+        grid-auto-flow: row;
+        box-shadow: var(--shadow);
+        visibility: hidden;
+        opacity: 0;
+    }
+
+    .nav__list[aria-expanded="true"] {
+        visibility: visible;
+        transform-origin: top center;
+        opacity: 1;
+        transition: visibility 0ms, transform 166ms ease, opacity 166ms linear;
+    }
+}
+
+@media (max-width: 479px) {
+    .header-content--left > * {
+        scale: 0.83;
+    }
+    .nav__list {
+        width: calc(var(--full-width) - (var(--space-1) * 2));
+    }
+}
+
+
+ 
+  .carousel-container {
+    /* border-radius: 30px; */
+    overflow: hidden;
+   width: 100vw;
+    position: relative;
+    /* z-index: 0; */
+    top: -10%;
+  }
+  
+  /* Hide the images by default */
+  .mySlides {
+    display: inline;
+    width: 100vw;
+    /* background-color: #666; */
+    height: 90vh;
+  }
+
+  .mySlides img{
+    height: 90vh;
+    width: 500px;
+    background-color: #666;
+    /* border: 2px solid red; */
+    overflow: hidden;
+    background-size: cover;
+    float:right;
+  }
+  .prev,
+  .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    width: auto;
+    padding: 20px;
+    border-radius: 50%;
+    color: #081158;
+  
+    font-weight: bold;
+    font-size: 24px;
+    /* border-radius: 0 8px 8px 0; */
+    background: rgba(20, 2, 62, 0.1);
+    user-select: none;
+  }
+  .next {
+    right: 0;
+    border-radius:50%
+  }
+  .prev:hover,
+  .next:hover {
+    background-color: rgba(173, 216, 230, 0.3);
+  }
+  
+  /* Caption text */
+  .text {
+    color:black;
+ 
+    /* backdrop-filter: blur(6px); */
+    border-radius: 10px;
+    font-size: 50px;
+    width: 700px;
+    padding: 8px 12px;
+    position:absolute;
+    top: 20%;
+    left: 30%;
+    transform: translate(-50%);
+    text-align: center;
+  }
+  .text p{
+    font-size: 20px;
+    margin-left: 20px;
+    margin-top: 20px;
+    color:#081158;
+    width: 600px;
+  }
+  .text button{
+    background-color:#081158;
+    color: white;
+    padding:12px 16px;
+    font-size: 20px;
+    border-radius: 10px;
+    border: none;
+  }
+  .text span{
+    font-weight: 900;
+    color:#081158;
+  }
+  /* Number text (1/3 etc) */
+
+  .dots-container {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translate(-50%);
+  }
+  
+  /* The dots/bullets/indicators */
+  .dots {
+    cursor: pointer;
+    height: 14px;
+    display: none;
+    width: 14px;
+    margin: 0 4px;
+    background-color: rgba(173, 216, 230, 0.2);
+    backdrop-filter: blur(2px);
+    border-radius: 50%;
+ 
+    transition: background-color 0.3s ease;
+  }
+  .active,
+  .dots:hover {
+    background-color: rgba(173, 216, 230, 0.8);
+  }
+  
+  /* transition animation */
+
+ .mySlides h1{
+    font-size: 90px;
+  margin-left:-200px;
+  transform: rotate(270deg);
+    z-index:-1;
+    color: black;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    left: 897px;
+    /* background:rebeccapurple; */
+    position: absolute;
+    top: 308px;
+    text-transform: uppercase;
+letter-spacing: 2px;
+    width: 300px;
+    /* background-color: aqua; */
+  }
+  .slider-main h2{
+    font-size: 90px;
+  /* margin-left: 500px; */
+  transform: rotate(270deg);
+    z-index:1;
+    color:white;
+    overflow: hidden;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    left: -240px;
+    position: absolute;
+    top: 220px;
+    text-transform: uppercase;
+letter-spacing: 2px;
+    width: 470px;
+    /* background-color: aqua; */
+  }
+  .slider-main{
+    width: 500px;
+    overflow: hidden;
+    position: relative;
+    float: right;
+    height: 100vh;
+    top: 10%;
+    /* background-color: aqua; */
+    /* border: 1px solid red; */
+ }
+ .slider-main2{
+    width: 500px;
+    overflow: hidden;
+    position: relative;
+    float: right;
+    height: 100vh;
+    top: 10%;
+    /* background-color: aqua; */
+    /* border: 1px solid red; */
+ }
+ .mySlides h1{
+    font-size: 90px;
+  margin-left:-200px;
+  transform: rotate(270deg);
+    z-index:-1;
+    color:black;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    left: 900px;
+    /* background:rebeccapurple; */
+    position: absolute;
+    top: 361px;
+    text-transform: uppercase;
+letter-spacing: 2px;
+    width: 300px;
+    /* background-color: aqua; */
+  }
+  .slider-main2 h2{
+    font-size: 90px;
+  /* margin-left: 500px; */
+  transform: rotate(270deg);
+    z-index:1;
+    color:white;
+    overflow: hidden;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    left: -240px;
+    position: absolute;
+    top: 220px;
+    text-transform: uppercase;
+letter-spacing: 2px;
+    width: 470px;
+    /* background-color: aqua; */
+  }
+  .slider-main3{
+    width: 500px;
+    overflow: hidden;
+    position: relative;
+    float: right;
+    height: 100vh;
+    top: 10%;
+    /* background-color: aqua; */
+    /* border: 1px solid red; */
+ }
+ .slider-main3 h2{
+    font-size: 90px;
+  /* margin-left: 500px; */
+  transform: rotate(270deg);
+    z-index:1;
+    color:white;
+    overflow: hidden;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    left: -240px;
+    position: absolute;
+    top: 220px;
+    text-transform: uppercase;
+letter-spacing: 2px;
+    width: 470px;
+    /* background-color: aqua; */
+  }
+  .slider-main4{
+    width: 500px;
+    overflow: hidden;
+    position: relative;
+    float: right;
+    height: 100vh;
+    top: 10%;
+    /* background-color: aqua; */
+    /* border: 1px solid red; */
+ }
+ .slider-main4 h2{
+    font-size: 90px;
+  /* margin-left: 500px; */
+  transform: rotate(270deg);
+    z-index:1;
+    color:white;
+    overflow: hidden;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    left: -240px;
+    position: absolute;
+    top: 220px;
+    text-transform: uppercase;
+letter-spacing: 2px;
+    width: 470px;
+    /* background-color: aqua; */
+  }
+  .slider-main5{
+    width: 500px;
+    overflow: hidden;
+    position: relative;
+    float: right;
+    height: 100vh;
+    top: 10%;
+    /* background-color: aqua; */
+    /* border: 1px solid red; */
+ }
+ .slider-main5 h2{
+    font-size: 90px;
+  /* margin-left: 500px; */
+  transform: rotate(270deg);
+    z-index:1;
+    color:white;
+    overflow: hidden;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    left: -240px;
+    position: absolute;
+    top: 220px;
+    text-transform: uppercase;
+letter-spacing: 2px;
+    width: 470px;
+    /* background-color: aqua; */
+  } 
+  .animate {
+  -webkit-animation-name: animate;
+  -webkit-animation-duration: 1s;
+  animation-name: animate;
+  animation-duration: 2s;
+}
+
+@keyframes animate {
+  0% {
+    opacity: 0;
+}
+100% {
+    opacity: 1;
+}
+}
+
+ </style>
+ 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitnesso Gym</title>
+</head>
+<body>
+    <div class="container">
+        <header class="site-header">
+            <div class="header__content--flow">
+                <section class="header-content--left">
+                    <a href="#" class="brand-logo">
+                        <img src="https://assets.website-files.com/5e80894f63c557e083ed96b4/5e808ce7dc544553a7f1b1e4_Black.svg" alt="">
+                        
+                    </a>
+                    <button class="nav-toggle">
+                        <span class="toggle--icon"></span>
+                    </button>
+                </section>
+                <section class="header-content--right">
+                    <nav class="header-nav" role="navigation">
+                        <ul class="nav__list" aria-expanded="false">
+                            
+                            <li class="list-item">
+                                <a class="nav__link" href="#about-us">About</a>
+                            </li>
+                            <li class="list-item">
+                                <a class="nav__link" href="#">Free Workouts</a>
+                            </li>
+                            <li class="list-item">
+                                <a class="nav__link" href="#">Shop</a>
+                            </li>
+                            <li class="list-item">
+                                <a class="nav__link" href="#"><button>Book a Call</button></a>
+                            </li>
+                        </ul>
+                    </nav>
+                </section>
+            </div>
+        </header>
+    </div>
+   <!-- Full-width images with number and caption text -->
+<div class="carousel-container">
+    <div class="mySlides animate2">
+        <div class="slider-main animate">
+        <h2>Workout</h2>
+<img src="https://assets.website-files.com/5e80894f63c557e083ed96b4/5e80a6e90c4ef4bcb4fd3071_Rectangle%20439.png" alt="">
+
+</div><br>
+<h1>Workout</h1>
+</div>
+      <!-- <div class="number">1 / 5</div> -->
+      <div class="text">Get a <span>Perfect</span> body <span>Figure</span> 
+    <p>I’ve created these premium fitness classes for everyone starting from beginner to advanced level with an in depth FAQ to answer all doubts.</p>
+<button>Premium Classes</button>   
+</div>
+    </div>
+  
+    <div class="mySlides animate">
+        <div class="slider-main2 animate">
+            <h2>Workout</h2>
+  <img src="https://assets.website-files.com/5e80894f63c557e083ed96b4/5e8318f6e893cd930956b324_logan-weaver-RBbwGEKBbD8-unsplash-p-800.jpeg" alt="">
+</div>
+<h1>Workout</h1>
+      <!-- <div class="number">2 / 5</div> -->
+      <div class="text">Pain is <span>temporary</span> but glory is <span> Forever</span> 
+        <p>I’ve created these premium fitness classes for everyone starting from beginner to advanced level with an in depth FAQ to answer all doubts.</p>
+    <button>Premium Classes</button>  
+    </div>
+  </div>
+    <div class="mySlides">
+        <div class="slider-main3 animate">
+            <h2>Exercise</h2>
+   <img src="https://assets.website-files.com/5e80894f63c557e083ed96b4/5e8318706203833a1bd11fad_logan-weaver-pD5kSwtNgMc-unsplash-p-1600.jpeg" alt="">
+  
+</div>
+   <h1>Exercise</h1>
+   <div class="number">3 / 5</div>
+      <div class="text">Transforming lifes with <span>fitness</span> & <span> nutrition</span>
+        <p>I’ve created these premium fitness classes for everyone starting from beginner to advanced level with an in depth FAQ to answer all doubts.</p>
+    <button>Premium Classes</button> 
+    </div>
+    </div>
+  
+    <div class="mySlides">
+        <div class="slider-main4 animate">
+    <img src="data:image/jpeg;base64,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" alt="">
+  
+    <h2>Practice</h2></div>  <h1>Practice</h1>
+    <div class="number">4 / 5</div>
+      <div class="text">Exercise is <span> labor</span> without <span>weariness.</span>
+        <p>I’ve created these premium fitness classes for everyone starting from beginner to advanced level with an in depth FAQ to answer all doubts.</p>
+        <button>Premium Classes</button>
+    
+    </div>
+    </div>
+  
+    <div class="mySlides">
+        <div class="slider-main5 animate">
+        <img src="https://images.unsplash.com/photo-1595078475328-1ab05d0a6a0e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1400&q=80" alt="">
+     <br> 
+     
+     <h2>power</h2></div><h1>power</h1>
+      <div class="number">5 / 5</div>
+      <div class="text">Do something <span> today</span> that your future self will <span> thank you </span>for.
+        <p>I’ve created these premium fitness classes for everyone starting from beginner to advanced level with an in depth FAQ to answer all doubts.</p>
+        <button>Premium Classes</button>
+    </div>
+    </div>
+  
+    <!-- Next and previous buttons -->
+    <a class="prev" onclick="prevSlide()">&#10094;</a>
+    <a class="next" onclick="nextSlide()">&#10095;</a>
+  
+    <!-- The dots/circles -->
+    <div class="dots-container">
+      <span class="dots" onclick="currentSlide(1)"></span>
+      <span class="dots" onclick="currentSlide(2)"></span>
+      <span class="dots" onclick="currentSlide(3)"></span>
+      <span class="dots" onclick="currentSlide(4)"></span>
+      <span class="dots" onclick="currentSlide(5)"></span>
+    </div>
+  </div> 
+  <script>
+    let slideIndex = 0;
+showSlides();
+
+// Next-previous control
+function nextSlide() {
+  slideIndex++;
+  showSlides();
+  timer = _timer; // reset timer
+}
+
+function prevSlide() {
+  slideIndex--;
+  showSlides();
+  timer = _timer;
+}
+
+// Thumbnail image controlls
+function currentSlide(n) {
+  slideIndex = n - 1;
+  showSlides();
+  timer = _timer;
+}
+
+function showSlides() {
+  let slides = document.querySelectorAll(".mySlides");
+  let dots = document.querySelectorAll(".dots");
+
+  if (slideIndex > slides.length - 1) slideIndex = 0;
+  if (slideIndex < 0) slideIndex = slides.length - 1;
+  
+  // hide all slides
+  slides.forEach((slide) => {
+    slide.style.display = "none";
+  });
+  
+  // show one slide base on index number
+  slides[slideIndex].style.display = "block";
+  
+  dots.forEach((dot) => {
+    dot.classList.remove("active");
+  });
+  
+  dots[slideIndex].classList.add("active");
+}
+
+// autoplay slides --------
+let timer = 7; // sec
+const _timer = timer;
+
+// this function runs every 1 second
+setInterval(() => {
+  timer--;
+
+  if (timer < 1) {
+    nextSlide();
+    timer = _timer; // reset timer
+  }
+}, 1000); // 1sec
+
+const container = document.querySelector(".container");
+const primaryNav = document.querySelector(".nav__list");
+const toggleButton = document.querySelector(".nav-toggle");
+
+toggleButton.addEventListener("click", () => {
+    const isExpanded = primaryNav.getAttribute("aria-expanded");
+    primaryNav.setAttribute(
+        "aria-expanded",
+        isExpanded === "false" ? "true" : "false"
+    );
+});
+
+container.addEventListener("click", (e) => {
+    if (!primaryNav.contains(e.target) && !toggleButton.contains(e.target)) {
+        primaryNav.setAttribute("aria-expanded", "false");
+    }
+});
+</script>
+</body>
+</html>
